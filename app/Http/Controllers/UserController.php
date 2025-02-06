@@ -12,7 +12,14 @@ class UserController extends Controller
     public function index(): View
     {
 
-        $users = User::where('id', '!=',Auth::user()->id)->get();
+        $users = User::where('id', '!=', Auth::user()->id)->withCount(['unreadMessages'])->get();
+        dd($users);
+        foreach($users as $user) {
+
+            $user->id == 4
+             && dd($user->unreadMessages()->get());
+        }
+        dd($users);
 
         return view('dashboard', compact('users'));
     }

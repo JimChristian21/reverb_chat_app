@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('file_name')->nullable();
             $table->string('file_original_name')->nullable();
             $table->string('folder_path')->nullable();
-            $table->boolean('is_ready')->default(false);
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
     }

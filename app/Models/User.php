@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function unreadMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id', 'id')->where('is_read', false);
+    }
 }
