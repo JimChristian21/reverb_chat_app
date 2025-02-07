@@ -12,11 +12,13 @@ class Chat extends Component
     public $user;
     public $message;
     public $receiver_id;
+    public $messages;
 
     public function mount(int $userId)
     {
         $this->user = $this->getUser($userId);
         $this->receiver_id = $userId;
+        $this->messages = $this->getMessages();
     }
 
     public function render()
@@ -24,8 +26,18 @@ class Chat extends Component
         return view('livewire.chat');
     }
 
-    public function getMessages() {
-        
+    public function getMessages() 
+    {
+        return Message::with('sender:id,name', 'receiver:id,name')
+            ->where(function($query) {
+                $query->where('sender_id', Auth::user()->id)
+                    ->where('receiver_id', $this->receiver_id);
+            })
+            ->orWhere(function($query) {
+                $query->where('sender_id', $this->receiver_id)
+                    ->where('receiver_id', Auth::user()->id);
+            })
+            ->get();
     }
 
     public function sendMessage()
