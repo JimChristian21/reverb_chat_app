@@ -24,6 +24,10 @@ class Chat extends Component
         return view('livewire.chat');
     }
 
+    public function getMessages() {
+        
+    }
+
     public function sendMessage()
     {
         $this->saveMessage();
